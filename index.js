@@ -23,6 +23,7 @@ async function run() {
         await client.connect()
 
         const allTodos = client.db("dbToDo").collection("dbToDoCollection");
+        const doneTodos = client.db("dbdoneTodos").collection("doneTodosCollection");
 
         app.post('/to-do', async (req, res) => {
             const body = req.body
@@ -73,9 +74,15 @@ async function run() {
                 $set: { status: 'done' },
             };
             const result = await allTodos.updateOne(filter, updateDoc, options);
+            const result1 = await doneTodos.updateOne(filter, updateDoc, options);
             res.send(result);
         })
-
+        app.get('/to-do-done', async (req, res) => {
+            const query = {}
+            const cursor = doneTodos.find(query)
+            const result = await cursor.toArray()
+            res.send(result)
+        })
         //query complete task
         /* app.get('/to-do', async (req, res) => {
             const status = req.query.status;
