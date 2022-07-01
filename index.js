@@ -74,14 +74,13 @@ async function run() {
                 $set: { status: 'done' },
             };
             const result = await allTodos.updateOne(filter, updateDoc, options);
-            const result1 = await doneTodos.updateOne(filter, updateDoc, options);
             res.send(result);
         })
         app.get('/to-do-done', async (req, res) => {
-            const query = {}
-            const cursor = doneTodos.find(query)
-            const result = await cursor.toArray()
-            res.send(result)
+            const status = req.query.status;
+            const query = { status: status };
+            const result = await allTodos.find(query).toArray()
+            res.send(result);
         })
         //query complete task
         /* app.get('/to-do', async (req, res) => {
