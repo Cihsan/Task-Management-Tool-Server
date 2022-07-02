@@ -23,7 +23,7 @@ async function run() {
         await client.connect()
 
         const allTodos = client.db("dbToDo").collection("dbToDoCollection");
-        const doneTodos = client.db("dbdoneTodos").collection("doneTodosCollection");
+        const doneTodos = client.db("dbToDo").collection("doneTodosCollection");
 
         app.post('/to-do', async (req, res) => {
             const body = req.body
@@ -65,8 +65,8 @@ async function run() {
             const result = await allTodos.updateOne(filter, updateDoc, options)
             res.send(result)
         }) */
-//status update
-        app.put('/to-do/:id', async (req, res) => {
+        //status update from green
+        app.put('/to-dos/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) };
             const options = { upsert: true }
@@ -78,9 +78,24 @@ async function run() {
         })
         app.get('/to-do-done', async (req, res) => {
             const status = req.query.status;
-            const query = { status: status };
-            const result = await allTodos.find(query).toArray()
+            const query = { status: done };
+            const result = await doneTodos.find(query).toArray()
             res.send(result);
+        })
+        //update task
+        app.put('/to-do/:id', async (req, res) => {
+            const id = req.params.id;
+            const task = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    taskName: task.taskName,
+                }
+            };
+            const result = await allTodos.updateOne(filter, updatedDoc, options);
+            res.send(result);
+
         })
         //query complete task
         /* app.get('/to-do', async (req, res) => {
