@@ -50,21 +50,6 @@ async function run() {
             res.send(result)
         })
 
-
-        // edit
-        /* app.put('/to-do/:id', async (req, res) => {
-            const id = req.params.id
-            const edited = req.body
-            const filter = { _id: ObjectId(id) }
-            const options = { upsert: true }
-            const updateDoc = {
-                $set: {
-                    title: edited.title,
-                }
-            }
-            const result = await allTodos.updateOne(filter, updateDoc, options)
-            res.send(result)
-        }) */
         //status update from green
         app.put('/to-dos/:id', async (req, res) => {
             const id = req.params.id;
@@ -97,20 +82,7 @@ async function run() {
             res.send(result);
 
         })
-        //query complete task
-        /* app.get('/to-do', async (req, res) => {
-            const status = req.query.status;
-            const query = { status: status };
-            const result = await allTodos.find(query).toArray()
-            res.send(result);
-        }); */
-        /* 
-        
-        http://localhost:5000/to-do?status=${status}
 
-
-        
-        */
     }
     finally {
         //await client.close()
