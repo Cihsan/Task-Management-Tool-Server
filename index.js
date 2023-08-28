@@ -1,10 +1,8 @@
 const { MongoClient, ObjectId, ServerApiVersion } = require('mongodb');
 const express = require('express')
 const cors = require('cors') //support diffrent port
-require('dotenv').config()// for envirment variable
 const port = process.env.PORT || 5000
 const app = express()
-const jwt = require('jsonwebtoken');
 const { query } = require('express');
 app.use(express.urlencoded({ extended: true }))
 
@@ -19,6 +17,7 @@ app.get('/', (req, res) => {
 
 
 const uri = `mongodb+srv://task:8IndB2m6lfSc1Dbq@cluster0.tdenfti.mongodb.net/?retryWrites=true&w=majority`;
+
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 async function run() {
     try {
