@@ -6,6 +6,8 @@ const port = process.env.PORT || 5000
 const app = express()
 const jwt = require('jsonwebtoken');
 const { query } = require('express');
+app.use(express.urlencoded({ extended: true }))
+
 app.use(cors()) //
 app.use(express.json()) //for parse
 //task
